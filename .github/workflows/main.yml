@@ -1,0 +1,58 @@
+name: Deploy Multi-PWA to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build static dist folder & auto-inject PWA loader
+        run: |
+          mkdir -p _site/assets
+          cp pwa-loader.js sw.js _site/
+          cp -r assets/* _site/assets/
+
+          # Copy HTML files from prototype/ to root of _site/ and auto-inject pwa-loader.js
+          for file in prototype/*.html; do
+            filename=$(basename "$file")
+            if grep -q "pwa-loader.js" "$file"; then
+              cp "$file" "_site/$filename"
+            else
+              sed 's|</head>|  <script src="./pwa-loader.js"></script>\n</head>|I' "$file" > "_site/$filename"
+            fi
+          done
+
+          # Copy root index.html if present
+          if [ -f "index.html" ]; then
+            cp index.html _site/index.html
+          fi
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '_site'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
