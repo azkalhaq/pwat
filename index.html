@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PWA Prototype Hub</title>
+  <script src="./pwa-loader.js"></script>
+  <style>
+    :root {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+    }
+    body {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 48px 24px;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #94a3b8;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .card-list {
+      display: grid;
+      gap: 14px;
+    }
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 20px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 14px;
+      color: #f8fafc;
+      text-decoration: none;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      border-color: #38bdf8;
+    }
+    .card-title {
+      font-weight: 600;
+      font-size: 16px;
+    }
+    .card-url {
+      font-size: 12px;
+      color: #38bdf8;
+      margin-top: 4px;
+      font-family: monospace;
+    }
+    .badge {
+      background: #ff002520;
+      color: #ff4d67;
+      border: 1px solid #ff002540;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+  </style>
+</head>
+<body>
+  <h1>PWA Prototype Hub</h1>
+  <p>Select any prototype below to open and install it as an isolated standalone Progressive Web App.</p>
+  <div class="card-list">
+    <a class="card" href="./mytelkomsel-snackbar">
+      <div>
+        <div class="card-title">MyTelkomsel · Snackbar Prototype</div>
+        <div class="card-url">/mytelkomsel-snackbar</div>
+      </div>
+      <span class="badge">PWA Ready</span>
+    </a>
+    <a class="card" href="./inbox">
+      <div>
+        <div class="card-title">Inbox Sample (MyTelkomsel Snackbar)</div>
+        <div class="card-url">/inbox</div>
+      </div>
+      <span class="badge">PWA Ready</span>
+    </a>
+  </div>
+</body>
+</html>
